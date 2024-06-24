@@ -2,16 +2,17 @@ using System;
 
 class Program {
  public static void Main(string[] args) {
+     string[] salespersonNames = { "Danielle", "Edward", "Francis"};
+     string[] allowedInitials = { "D", "E", "F" };
+     double[] totalSales = new double[3];
      Console.WriteLine("Hi User, please enter an initial.");
-        double totalDanielle = 0;
-        double totalEdward = 0;
-        double totalFrancis = 0;
 
         while (true) {
             Console.Write("salesperson: ");
             string initial = Console.ReadLine().ToUpper();
 
-            if (initial == "D" || initial == "E" || initial == "F") {
+            int index = Array.IndexOf(allowedInitials, initial);
+            if (index != -1) {
                 double saleAmount;
 
                 Console.Write("sale: ");
@@ -19,18 +20,7 @@ class Program {
                     Console.WriteLine("Invalid input. Please try again.");
                     Console.Write($"sale: ");
                 }
-
-                switch (initial) {
-                    case "D":
-                        totalDanielle += saleAmount;
-                        break;
-                    case "E":
-                        totalEdward += saleAmount;
-                        break;
-                    case "F":
-                        totalFrancis += saleAmount;
-                        break;
-                }
+                 totalSales[index] += saleAmount;
             }
             else {
                 Console.WriteLine("    intermediate output: Error, invalid salesperson selected, please try again");
@@ -43,26 +33,23 @@ class Program {
             }
         }
 
-        double grandTotal = totalDanielle + totalEdward + totalFrancis;
+        double grandTotal = totalSales[0] + totalSales[1] + totalSales[2];
         Console.WriteLine($"\nGrand Total: ${grandTotal:N0}");
 
-        string topSalesperson = GetTopSalesperson(totalDanielle, totalEdward, totalFrancis);
-        Console.WriteLine($"Highest Sale: {topSalesperson}");
-
+        string topSalespersonInitial = GetTopSalesperson(allowedInitials, totalSales);
+        string topSalespersonName = salespersonNames[Array.IndexOf(allowedInitials, topSalespersonInitial)];     
+        Console.WriteLine($"Highest Sale: {topSalespersonName} ({topSalespersonInitial})");
         }
-
-        static string GetTopSalesperson(double danielle, double edward, double francis) {
-        if (danielle > edward && danielle > francis) {
-            return "D";
+    
+        static string GetTopSalesperson(string[] allowedInitials, double[] totalSales) {
+        int maxIndex = 0;
+        double maxSales = totalSales[0];
+            for (int i = 1; i < totalSales.Length; i++) {
+                if (totalSales[i] > maxSales) {
+                    maxSales = totalSales[i];
+                    maxIndex = i;
+                }
+            }
+            return allowedInitials[maxIndex];
         }
-        else if (edward > danielle && edward > francis) {
-            return "E";
-        }
-        else if (francis > danielle && francis > edward) {
-            return "F";
-        }
-        else {
-            return "No person found"; 
-        }
-     }
-}
+    }

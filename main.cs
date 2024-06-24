@@ -38,7 +38,7 @@ class Program {
 
         string topSalespersonInitial = GetTopSalesperson(allowedInitials, totalSales);
         string topSalespersonName = salespersonNames[Array.IndexOf(allowedInitials, topSalespersonInitial)];     
-        Console.WriteLine($"Highest Sale: {topSalespersonName} ({topSalespersonInitial})");
+        Console.WriteLine($"Highest Sale: {topSalespersonInitial}");
         }
     
         static string GetTopSalesperson(string[] allowedInitials, double[] totalSales) {
